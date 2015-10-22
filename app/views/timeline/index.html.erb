@@ -1,0 +1,32 @@
+<h1>timeline<h1>
+<%=form_tag '/write', method: 'post' do%>
+    <textarea name="name"></textarea>
+    <input type="submit"> 
+<% end %>
+<ul>
+    <% @blogs.each do |b| %>
+    <li><%=b.content%>
+    <%=form_tag action="/comment" do%>
+        <input type='hidden' name="blog_id" value="<%=b.id%>">
+        <input type='text' name="comment">
+        <input type="submit">
+    <%end%>
+    <ol>
+    <% b.comments.each do |c| %>
+        <li><%=c.msg%>
+        
+        <%=form_tag action="/modify" do%>
+            <input type='hidden' name="comment_id" value="<%=c.id%>">
+            <input type='text' name="comment2">
+            <input type="submit" value="modify">
+        <%end%>
+        <%=form_tag action="/delete" do%>
+            <input type='hidden' name="comment_id" value="<%=c.id%>">
+            <input type="submit" value="delete">
+        <%end%>
+        </li>
+    <%end%>
+    </ol>
+    </li>
+    <%end%>
+</ul>
