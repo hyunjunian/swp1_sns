@@ -1,37 +1,52 @@
-<h1>timeline<h1>
+<h1>timeline</h1>
 <%=form_tag '/write', method: 'post' do%>
-    <textarea name="name"></textarea>
-    <input type="submit"> 
+<div class="form-group">
+    <textarea name="name" class="form-control" row="5"></textarea>
+</div>
+<div class="form-group">
+    <input class="btn btn-Default" type="submit"> 
+</div>
 <% end %>
-<ul>
+
+
     <% @blogs.each do |b| %>
-    <li><%=b.user.email%> : <%=b.content%>
+    <div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%=b.user.email%> : <%=b.content%></h3>
+  </div>
     <%=form_tag action="/individual" do%>
         <input type='hidden' name="user_id" value="<%=b.user_id%>">
-        <input type="submit" value="이 유저 블로그 모아보기">
+<div class="form-group">
+        <input class="btn btn-Default" type="submit" value="이 유저 블로그 모아보기">
+</div>
     <%end%>
-    <%=form_tag action="/comment" do%>
+    <%=form_tag action="/comment", class: "form-inline" do%>
         <input type='hidden' name="blog_id" value="<%=b.id%>">
         <input type='text' name="comment">
-        <input type="submit">
+<div class="form-group">
+        <input class="btn btn-Default" type="submit" value="댓글달기">
+</div>
     <%end%>
-    <ol>
+  <div class="panel-body">
     <% b.comments.each do |c| %>
         <li><%=c.user.email%> : <%=c.msg%>
-        <% if c.user_id == current_user.id%>
-        <%=form_tag action="/modify" do%>
+        <% if user_signed_in? && c.user_id == current_user.id%>
+        <%=form_tag action="/modify", class: "form-inline" do%>
             <input type='hidden' name="comment_id" value="<%=c.id%>">
             <input type='text' name="comment2">
-            <input type="submit" value="modify">
+<div class="form-group">
+            <input class="btn btn-Default" type="submit" value="댓글수정">
+</div>
         <%end%>
         <%=form_tag action="/delete" do%>
             <input type='hidden' name="comment_id" value="<%=c.id%>">
-            <input type="submit" value="delete">
-        <%end%>
+<div class="form-group">
+            <input class="btn btn-Default" type="submit" value="삭제">
+</div>
         <%end%>
         </li>
+        <%end%>
     <%end%>
-    </ol>
-    </li>
+  </div>
+</div>
     <%end%>
-</ul>

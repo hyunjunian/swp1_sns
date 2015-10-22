@@ -1,13 +1,15 @@
-<h1>individual timeline<h1>
+<h1>individual timeline</h1>
 <a href="/">돌아가기</a>
-<ul>
+
     <% @blogs.each do |b| %>
-    <li><%=b.user.email%> : <%=b.content%>
-    <ol>
+    <div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%=b.user.email%> : <%=b.content%></h3>
+  </div>
+  <div class="panel-body">
     <% b.comments.each do |c| %>
         <li><%=c.user.email%> : <%=c.msg%></li>
     <%end%>
-    </ol>
-    </li>
+  </div>
+</div>
     <%end%>
-</ul>
