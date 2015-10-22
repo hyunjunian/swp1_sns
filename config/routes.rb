@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
+  devise_for :users
   root 'timeline#index'
   post '/write'=>'timeline#write'
   post '/comment'=>'timeline#comment'
   post '/delete'=>'timeline#delete'
   post '/modify'=>'timeline#modify'
+  post '/individual'=>'timeline#individual'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

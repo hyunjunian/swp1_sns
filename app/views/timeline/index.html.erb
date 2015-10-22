@@ -5,7 +5,11 @@
 <% end %>
 <ul>
     <% @blogs.each do |b| %>
-    <li><%=b.content%>
+    <li><%=b.user.email%> : <%=b.content%>
+    <%=form_tag action="/individual" do%>
+        <input type='hidden' name="user_id" value="<%=b.user_id%>">
+        <input type="submit" value="이 유저 블로그 모아보기">
+    <%end%>
     <%=form_tag action="/comment" do%>
         <input type='hidden' name="blog_id" value="<%=b.id%>">
         <input type='text' name="comment">
@@ -13,8 +17,8 @@
     <%end%>
     <ol>
     <% b.comments.each do |c| %>
-        <li><%=c.msg%>
-        
+        <li><%=c.user.email%> : <%=c.msg%>
+        <% if c.user_id == current_user.id%>
         <%=form_tag action="/modify" do%>
             <input type='hidden' name="comment_id" value="<%=c.id%>">
             <input type='text' name="comment2">
@@ -23,6 +27,7 @@
         <%=form_tag action="/delete" do%>
             <input type='hidden' name="comment_id" value="<%=c.id%>">
             <input type="submit" value="delete">
+        <%end%>
         <%end%>
         </li>
     <%end%>
